@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<div style="text-align: center;" id="div1"></div>
+	<script type="text/javascript">
+		setInterval(function(){
+			$.ajax({
+				url: '/distance',
+				success: function(res){
+					var obj = jQuery.parseJSON( res );
+					$("#div1").html("Sensor 1: "+obj.sensor_1+"<br>Sensor 2: "+obj.sensor_2);
+				},
+				error: function(err){
+					$("#div1").html("Error!");
+				}
+			});
+		}, 2000);
+	</script>
+</body>
+</html>

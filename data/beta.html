@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<div style="text-align: center;" id="div1"></div>
+	<script type="text/javascript">
+		function myFunction(){
+			$.ajax({
+				url: 'http://192.168.1.116/distance',
+				success: function(res){
+					var obj = jQuery.parseJSON( res );
+					$("#div1").html("Sensor 1: "+obj.sensor_1+"<br>Sensor 2: "+obj.sensor_2);
+					$.ajax({
+						url: 'output.py',
+						type: 'POST',
+						data: {
+							slot_1 : obj.sensor_1,
+							slot_2 : obj.sensor_2
+						},
+						success: function(){
+							alert("Complete");
+						}
+					});
+				},
+				error: function(err){
+					$("#div1").html("Error!");
+				}
+			});
+		};
+		myFunction();
+		var rate = 3000;
+		setInterval(function(){myFunction();}, rate);
+	</script>
+</body>
+</html>
